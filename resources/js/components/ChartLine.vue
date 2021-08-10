@@ -1,6 +1,5 @@
 <template>
     <div>
-        <div>Line</div>
         <Highcharts :options="options"></Highcharts>
     </div>
 </template>

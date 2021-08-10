@@ -19,9 +19,8 @@ class DatabaseSeeder extends Seeder
         $path = base_path('database/seeders/demoCompressorWeekData.csv');
         $records = fopen($path, 'r');
 
-        $count = 0;
         while (($row = fgetcsv($records, 0, ',')) != false){
-            if ($count) {
+            if ($row[1] == 'Psum_kW') {
                 /*Array (
                     [0] => timestamp
                     [1] => metricid
@@ -58,7 +57,6 @@ class DatabaseSeeder extends Seeder
                 $record->deviation    = $row[7];
                 $record->save();
             }
-            $count++;
         }
     }
 }
