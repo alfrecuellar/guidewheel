@@ -22194,15 +22194,10 @@ __webpack_require__.r(__webpack_exports__);
         xAxis: {
           type: 'datetime',
           dateTimeLabelFormats: {
-            minute: '%H:%M',
-            month: '%e. %b',
-            year: '%b'
+            minute: '%H:%M'
           },
           title: {
-            text: 'Date'
-          },
-          labels: {
-            overflow: 'justify'
+            text: 'Datetime'
           }
         },
         yAxis: {
@@ -22216,17 +22211,17 @@ __webpack_require__.r(__webpack_exports__);
           alternateGridColor: null,
           plotBands: [{
             from: 0,
-            to: 10,
-            color: 'rgba(220, 53, 69, 0.1)',
+            to: 1,
+            color: 'rgba(220, 53, 69, 0.3)',
             label: {
               style: {
                 color: '#606060'
               }
             }
           }, {
-            from: 10,
+            from: 1,
             to: 20,
-            color: 'rgba(255, 193, 7, 0.1)',
+            color: 'rgba(255, 193, 7, 0.2)',
             label: {
               style: {
                 color: '#606060'
@@ -22234,8 +22229,8 @@ __webpack_require__.r(__webpack_exports__);
             }
           }, {
             from: 20,
-            to: 100,
-            color: 'rgba(13, 110, 253, 0.1)',
+            to: 125,
+            color: 'rgba(13, 110, 253, 0.15)',
             label: {
               style: {
                 color: '#606060'
@@ -22253,14 +22248,14 @@ __webpack_require__.r(__webpack_exports__);
             }
           },
           spline: {
-            lineWidth: 4,
+            lineWidth: 2,
             states: {
               hover: {
-                lineWidth: 5
+                lineWidth: 2
               }
             },
             marker: {
-              enabled: false
+              enabled: true
             },
             pointInterval: 3600000 / 120
           }
@@ -22295,7 +22290,7 @@ __webpack_require__.r(__webpack_exports__);
         var serie = [];
 
         _.each(response.data, function (item) {
-          serie.push([DateTime.fromSQL(item[0]).toJSDate(), parseFloat(item[1])]);
+          serie.push([_this.formatUTC(item[0]), parseFloat(item[1])]);
         });
 
         console.log(serie);
@@ -22305,6 +22300,10 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
         _this.loading = false;
       });
+    },
+    formatUTC: function formatUTC(string) {
+      var datetime = DateTime.fromSQL(string);
+      return Date.UTC(datetime.get('year'), datetime.get('month'), datetime.get('day'), datetime.get('hour'), datetime.get('minute'), datetime.get('second'));
     }
   }
 });
@@ -22336,7 +22335,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       period: 'hour',
       date: '2018-08-20',
-      time: '01:00',
+      time: '08:00',
       serie: null
     };
   },
@@ -22366,7 +22365,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     load: function load() {
-      this.$refs.chartLine.load(); //this.$refs.chartCols.load();
+      var _this = this;
+
+      setTimeout(function () {
+        _this.$refs.chartLine.load(); //this.$refs.chartCols.load();
+
+      }, 100);
     }
   }
 });
@@ -22522,7 +22526,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "form-select",
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.period = $event;
-    })
+    }),
+    disabled: "disabled"
   }, _hoisted_13, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.period]])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [$data.period == 'hour' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("label", _hoisted_17, "Datetime:")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("label", _hoisted_18, "Date:"))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {

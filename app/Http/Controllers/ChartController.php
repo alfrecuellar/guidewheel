@@ -25,23 +25,23 @@ class ChartController extends Controller
         $timestamp = Carbon::create($datetime);
         switch($period) {
             case 'hour':
-                $from = $timestamp->copy()->subHour();
+                $to = $timestamp->copy()->addHour();
                 break;
             case 'day':
-                $from = $timestamp->copy()->subDay();
+                $to = $timestamp->copy()->addDay();
                 break;
             case 'week':
-                $from = $timestamp->copy()->subWeek();
+                $to = $timestamp->copy()->addWeek();
                 break;
             case 'month':
-                $from = $timestamp->copy()->subMonth();
+                $to = $timestamp->copy()->addMonth();
                 break;
         }
 
         $metric = Metric::where('name', 'Psum_kW')->first();
 
         $records = Record::select(['timestamp','recvalue'])->where('metric_id', $metric->id)
-            ->whereBetween('timestamp', [$from, $timestamp])
+            ->whereBetween('timestamp', [$timestamp, $to])
             ->get();
 
         $serie = collect();

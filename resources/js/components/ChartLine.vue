@@ -33,15 +33,10 @@
                         type: 'datetime',
                         dateTimeLabelFormats: {
                             minute: '%H:%M',
-                            month: '%e. %b',
-                            year: '%b'
                         },
                         title: {
-                            text: 'Date'
+                            text: 'Datetime'
                         },
-                        labels: {
-                            overflow: 'justify'
-                        }
                     },
                     yAxis: {
                         title: {
@@ -55,17 +50,17 @@
                         plotBands: [
                             {
                                 from: 0,
-                                to: 10,
-                                color: 'rgba(220, 53, 69, 0.1)',
+                                to: 1,
+                                color: 'rgba(220, 53, 69, 0.3)',
                                 label: {
                                     style: {
                                         color: '#606060'
                                     }
                                 }
                             }, {
-                                from: 10,
+                                from: 1,
                                 to: 20,
-                                color: 'rgba(255, 193, 7, 0.1)',
+                                color: 'rgba(255, 193, 7, 0.2)',
                                 label: {
                                     style: {
                                         color: '#606060'
@@ -73,8 +68,8 @@
                                 }
                             }, {
                                 from: 20,
-                                to: 100,
-                                color: 'rgba(13, 110, 253, 0.1)',
+                                to: 125,
+                                color: 'rgba(13, 110, 253, 0.15)',
                                 label: {
                                     style: {
                                         color: '#606060'
@@ -93,14 +88,14 @@
                             }
                         },
                         spline: {
-                            lineWidth: 4,
+                            lineWidth: 2,
                             states: {
                                 hover: {
-                                    lineWidth: 5
+                                    lineWidth: 2
                                 }
                             },
                             marker: {
-                                enabled: false
+                                enabled: true
                             },
                             pointInterval: 3600000 / 120,
                         }
@@ -123,7 +118,9 @@
                 if (this.request) {
                     this.request.cancel();
                 }
+
                 this.options.series[0].data = [];
+
                 this.loading = true;
                 this.request = axios.CancelToken.source();
                 axios.get('/chart/line', {
@@ -133,7 +130,7 @@
                     .then((response) => {
                         let serie = [];
                         _.each(response.data, (item) => {
-                            serie.push([DateTime.fromSQL(item[0]).toJSDate(), parseFloat(item[1])]);
+                            serie.push([this.formatUTC(item[0]), parseFloat(item[1])]);
                         });
                         console.log(serie);
                         this.options.series[0].data = serie;
@@ -142,6 +139,10 @@
                         console.log(error);
                         this.loading = false;
                     });
+            },
+            formatUTC(string) {
+                let datetime = DateTime.fromSQL(string);
+                return Date.UTC(datetime.get('year'), datetime.get('month'), datetime.get('day'), datetime.get('hour'), datetime.get('minute'), datetime.get('second'));
             }
         }
     }

@@ -9,7 +9,7 @@
                             <label class="form-label">Period:</label>
                         </div>
                         <div class="col-8">
-                            <select class="form-select" v-model="period">
+                            <select class="form-select" v-model="period" disabled="disabled">
                                 <option value="hour">Hour</option>
                                 <option value="day">Day</option>
                                 <option value="week">Week</option>
@@ -52,7 +52,7 @@
             return {
                 period : 'hour',
                 date: '2018-08-20',
-                time: '01:00',
+                time: '08:00',
                 serie: null,
             }
         },
@@ -82,8 +82,10 @@
         },
         methods : {
             load() {
-                this.$refs.chartLine.load();
-                //this.$refs.chartCols.load();
+                setTimeout(() => {
+                    this.$refs.chartLine.load();
+                    //this.$refs.chartCols.load();
+                }, 100);
             }
         }
     }
