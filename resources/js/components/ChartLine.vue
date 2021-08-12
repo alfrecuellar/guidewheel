@@ -33,6 +33,7 @@
                         type: 'datetime',
                         dateTimeLabelFormats: {
                             minute: '%H:%M',
+                            hour: '%H:%M',
                         },
                         title: {
                             text: 'Datetime'
@@ -95,9 +96,8 @@
                                 }
                             },
                             marker: {
-                                enabled: true
+                                enabled: false
                             },
-                            pointInterval: 3600000 / 120,
                         }
                     },
                     series: [{

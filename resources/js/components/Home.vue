@@ -9,7 +9,7 @@
                             <label class="form-label">Period:</label>
                         </div>
                         <div class="col-8">
-                            <select class="form-select" v-model="period" disabled="disabled">
+                            <select class="form-select" v-model="period">
                                 <option value="hour">Hour</option>
                                 <option value="day">Day</option>
                                 <option value="week">Week</option>

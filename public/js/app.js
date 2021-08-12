@@ -22235,7 +22235,8 @@ __webpack_require__.r(__webpack_exports__);
         xAxis: {
           type: 'datetime',
           dateTimeLabelFormats: {
-            minute: '%H:%M'
+            minute: '%H:%M',
+            hour: '%H:%M'
           },
           title: {
             text: 'Datetime'
@@ -22296,9 +22297,8 @@ __webpack_require__.r(__webpack_exports__);
               }
             },
             marker: {
-              enabled: true
-            },
-            pointInterval: 3600000 / 120
+              enabled: false
+            }
           }
         },
         series: [{
@@ -22573,8 +22573,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "form-select",
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.period = $event;
-    }),
-    disabled: "disabled"
+    })
   }, _hoisted_13, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.period]])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [$data.period == 'hour' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("label", _hoisted_17, "Datetime:")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("label", _hoisted_18, "Date:"))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
