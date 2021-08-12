@@ -132,7 +132,6 @@
                         _.each(response.data, (item) => {
                             serie.push([this.formatUTC(item[0]), parseFloat(item[1])]);
                         });
-                        console.log(serie);
                         this.options.series[0].data = serie;
                         this.loading = false;
                     }).catch(error => {

@@ -22118,13 +22118,48 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! highcharts */ "./node_modules/highcharts/highcharts.js");
+/* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(highcharts__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_highcharts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-highcharts */ "./node_modules/vue-highcharts/index.js");
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'chart-cols',
   props: ['params'],
+  components: {
+    Highcharts: (0,vue_highcharts__WEBPACK_IMPORTED_MODULE_1__.createHighcharts)('Highcharts', (highcharts__WEBPACK_IMPORTED_MODULE_0___default()))
+  },
   data: function data() {
     return {
-      serie: [],
-      request: null
+      request: null,
+      options: {
+        chart: {
+          type: 'column'
+        },
+        title: {
+          text: 'Status in Hours Range',
+          align: 'left'
+        },
+        xAxis: {
+          categories: []
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: 'Percentage Time'
+          }
+        },
+        tooltip: {
+          pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+          shared: true
+        },
+        plotOptions: {
+          column: {
+            stacking: 'percent'
+          }
+        },
+        series: []
+      }
     };
   },
   methods: {
@@ -22135,19 +22170,25 @@ __webpack_require__.r(__webpack_exports__);
         this.request.cancel();
       }
 
-      this.serie = [];
+      this.options.series = [];
+      this.options.xAxis.categories = [];
       this.loading = true;
       this.request = axios.CancelToken.source();
       axios.get('/chart/cols', {
         cancelToken: this.request.token,
         params: this.params
       }).then(function (response) {
-        _this.serie = response.data;
+        _this.options.series = response.data.series;
+        _this.options.xAxis.categories = response.data.categories;
         _this.loading = false;
       })["catch"](function (error) {
         console.log(error);
         _this.loading = false;
       });
+    },
+    formatUTC: function formatUTC(string) {
+      var datetime = DateTime.fromSQL(string);
+      return Date.UTC(datetime.get('year'), datetime.get('month'), datetime.get('day'), datetime.get('hour'), datetime.get('minute'), datetime.get('second'));
     }
   }
 });
@@ -22293,7 +22334,6 @@ __webpack_require__.r(__webpack_exports__);
           serie.push([_this.formatUTC(item[0]), parseFloat(item[1])]);
         });
 
-        console.log(serie);
         _this.options.series[0].data = serie;
         _this.loading = false;
       })["catch"](function (error) {
@@ -22368,8 +22408,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       setTimeout(function () {
-        _this.$refs.chartLine.load(); //this.$refs.chartCols.load();
+        _this.$refs.chartLine.load();
 
+        _this.$refs.chartCols.load();
       }, 100);
     }
   }
@@ -22391,7 +22432,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div");
+  var _component_Highcharts = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Highcharts");
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Highcharts, {
+    options: $data.options
+  }, null, 8
+  /* PROPS */
+  , ["options"])]);
 }
 
 /***/ }),

@@ -84,7 +84,7 @@
             load() {
                 setTimeout(() => {
                     this.$refs.chartLine.load();
-                    //this.$refs.chartCols.load();
+                    this.$refs.chartCols.load();
                 }, 100);
             }
         }

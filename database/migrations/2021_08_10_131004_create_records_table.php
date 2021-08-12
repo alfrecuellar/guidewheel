@@ -18,8 +18,8 @@ class CreateRecordsTable extends Migration
             $table->unsignedBigInteger('metric_id');
             $table->unsignedBigInteger('device_id');
             $table->datetime('timestamp');
-            $table->string('recvalue')->nullable();
-            $table->string('calcvalue')->nullable();
+            $table->decimal('recvalue', 25, 15)->nullable();
+            $table->decimal('calcvalue', 25, 15)->nullable();
             $table->string('excthreshold')->nullable();
             $table->string('excthlimit')->nullable();
             $table->string('deviation')->nullable();
